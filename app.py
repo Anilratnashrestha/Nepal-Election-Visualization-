@@ -43,7 +43,7 @@ def fetch_all_election_data():
     # 1. Fetch Direct (FPTP) Data
     fptp_url = "https://result.election.gov.np/"
     fptp_resp = requests.get(fptp_url, headers=headers, timeout=15)
-    fptp_tables = pd.read_html(fptp_resp.text)
+    fptp_tables = pd.read_html(fptp_resp.text, flavor='lxml')
     
     # Find the table containing FPTP results (looking for 'Elected' or 'Won')
     df_fptp = None
@@ -65,7 +65,7 @@ def fetch_all_election_data():
     # 2. Fetch PR Data
     pr_url = "https://result.election.gov.np/PRVoteChartResult2082.aspx"
     pr_resp = requests.get(pr_url, headers=headers, timeout=15)
-    pr_tables = pd.read_html(pr_resp.text)
+    pr_tables = pd.read_html(pr_resp.text, flavor='lxml')
     df_pr = pr_tables[0]
     
     df_pr = df_pr.rename(columns={df_pr.columns[1]: "Party", df_pr.columns[2]: "Votes"})
@@ -171,4 +171,5 @@ if st.button("🔴 Fetch Live Election Data", type="primary"):
         st.dataframe(df_final, use_container_width=True, hide_index=True)
 
     except Exception as e:
+
         st.error(f"⚠️ An error occurred while fetching or processing data. \n\nDetails: {e}")
