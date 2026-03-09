@@ -157,7 +157,7 @@ for party in unique_parties:
             text=party_text,
             hoverinfo='text',
             marker=dict(
-                size=14, 
+                size=20, 
                 color=p_color, 
                 line=dict(width=1.5 if party == "Undecided" else 1, color=party_line)
             )
@@ -187,3 +187,4 @@ df_display["PR Seats"] = df_display["PR Seats"].astype(int)
 df_display["Total Seats"] = df_display["Total Seats"].astype(int)
 
 st.dataframe(df_display, use_container_width=True, hide_index=True)
+
